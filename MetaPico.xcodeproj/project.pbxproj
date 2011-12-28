@@ -6,30 +6,41 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ABSTRSYN.PCO; sourceTree = "<group>"; };
+		D5E36EC714AB7DD4003623BC /* CASE.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CASE.PCO; sourceTree = "<group>"; };
+		D5E36EC814AB7DD4003623BC /* CONCRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONCRSYN.PCO; sourceTree = "<group>"; };
+		D5E36EC914AB7DD4003623BC /* DICT.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DICT.PCO; sourceTree = "<group>"; };
+		D5E36ECA14AB7DD4003623BC /* EVAL.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EVAL.PCO; sourceTree = "<group>"; };
+		D5E36ECB14AB7DD4003623BC /* GLOBAL.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GLOBAL.PCO; sourceTree = "<group>"; };
+		D5E36ECC14AB7DD4003623BC /* GRAMMAR.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GRAMMAR.PCO; sourceTree = "<group>"; };
+		D5E36ECD14AB7DD4003623BC /* MAKE.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MAKE.PCO; sourceTree = "<group>"; };
+		D5E36ECE14AB7DD4003623BC /* PICO.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PICO.PCO; sourceTree = "<group>"; };
+		D5E36ECF14AB7DD4003623BC /* PRINT.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PRINT.PCO; sourceTree = "<group>"; };
+		D5E36ED014AB7DD4003623BC /* READ.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = READ.PCO; sourceTree = "<group>"; };
+		D5E36ED114AB7DD4003623BC /* SCAN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SCAN.PCO; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		D5E36EB914AB7DBB003623BC = {
 			isa = PBXGroup;
 			children = (
+				D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */,
+				D5E36EC714AB7DD4003623BC /* CASE.PCO */,
+				D5E36EC814AB7DD4003623BC /* CONCRSYN.PCO */,
+				D5E36EC914AB7DD4003623BC /* DICT.PCO */,
+				D5E36ECA14AB7DD4003623BC /* EVAL.PCO */,
+				D5E36ECB14AB7DD4003623BC /* GLOBAL.PCO */,
+				D5E36ECC14AB7DD4003623BC /* GRAMMAR.PCO */,
+				D5E36ECD14AB7DD4003623BC /* MAKE.PCO */,
+				D5E36ECE14AB7DD4003623BC /* PICO.PCO */,
+				D5E36ECF14AB7DD4003623BC /* PRINT.PCO */,
+				D5E36ED014AB7DD4003623BC /* READ.PCO */,
+				D5E36ED114AB7DD4003623BC /* SCAN.PCO */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXLegacyTarget section */
-		D5E36EC014AB7DBB003623BC /* MetaPico */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = D5E36EC314AB7DBB003623BC /* Build configuration list for PBXLegacyTarget "MetaPico" */;
-			buildPhases = (
-			);
-			buildToolPath = /Users/Mathijs/Documents/Vub/ICP2/Pico/XPico/build/xpico.build;
-			dependencies = (
-			);
-			name = MetaPico;
-			passBuildSettingsInEnvironment = 1;
-			productName = MetaPico;
-		};
-/* End PBXLegacyTarget section */
 
 /* Begin PBXProject section */
 		D5E36EBB14AB7DBB003623BC /* Project object */ = {
@@ -49,7 +60,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5E36EC014AB7DBB003623BC /* MetaPico */,
 			);
 		};
 /* End PBXProject section */
@@ -100,27 +110,6 @@
 			};
 			name = Release;
 		};
-		D5E36EC414AB7DBB003623BC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUGGING_SYMBOLS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		D5E36EC514AB7DBB003623BC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -132,14 +121,6 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
-		};
-		D5E36EC314AB7DBB003623BC /* Build configuration list for PBXLegacyTarget "MetaPico" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D5E36EC414AB7DBB003623BC /* Debug */,
-				D5E36EC514AB7DBB003623BC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
