@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		D52E1DCE14B2983E00C2C897 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D558251814B28E6300AC4558 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		D558252214B2965500AC4558 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ABSTRSYN.PCO; sourceTree = "<group>"; };
@@ -28,6 +29,7 @@
 			isa = PBXGroup;
 			children = (
 				D558252214B2965500AC4558 /* README.md */,
+				D52E1DCE14B2983E00C2C897 /* .gitignore */,
 				D558251814B28E6300AC4558 /* Makefile */,
 				D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */,
 				D5E36EC714AB7DD4003623BC /* CASE.PCO */,
@@ -164,6 +166,7 @@
 				D558250214B27E3D00AC4558 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5E36EBE14AB7DBB003623BC /* Build configuration list for PBXProject "MetaPico" */ = {
 			isa = XCConfigurationList;
