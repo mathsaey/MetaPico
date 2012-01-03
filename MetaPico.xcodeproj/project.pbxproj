@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		D558251814B28E6300AC4558 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ABSTRSYN.PCO; sourceTree = "<group>"; };
 		D5E36EC714AB7DD4003623BC /* CASE.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CASE.PCO; sourceTree = "<group>"; };
 		D5E36EC814AB7DD4003623BC /* CONCRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONCRSYN.PCO; sourceTree = "<group>"; };
@@ -25,6 +26,7 @@
 		D5E36EB914AB7DBB003623BC = {
 			isa = PBXGroup;
 			children = (
+				D558251814B28E6300AC4558 /* Makefile */,
 				D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */,
 				D5E36EC714AB7DD4003623BC /* CASE.PCO */,
 				D5E36EC814AB7DD4003623BC /* CONCRSYN.PCO */,
@@ -42,6 +44,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		D55824FF14B27E3D00AC4558 /* MetaPico */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = Xcode;
+			buildConfigurationList = D558250014B27E3D00AC4558 /* Build configuration list for PBXLegacyTarget "MetaPico" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = MetaPico;
+			passBuildSettingsInEnvironment = 0;
+			productName = MetaPico;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXProject section */
 		D5E36EBB14AB7DBB003623BC /* Project object */ = {
 			isa = PBXProject;
@@ -57,14 +76,37 @@
 				en,
 			);
 			mainGroup = D5E36EB914AB7DBB003623BC;
+			productRefGroup = D5E36EB914AB7DBB003623BC;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				D55824FF14B27E3D00AC4558 /* MetaPico */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
+		D558250114B27E3D00AC4558 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D558250214B27E3D00AC4558 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D5E36EC114AB7DBB003623BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -113,6 +155,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D558250014B27E3D00AC4558 /* Build configuration list for PBXLegacyTarget "MetaPico" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D558250114B27E3D00AC4558 /* Debug */,
+				D558250214B27E3D00AC4558 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D5E36EBE14AB7DBB003623BC /* Build configuration list for PBXProject "MetaPico" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
