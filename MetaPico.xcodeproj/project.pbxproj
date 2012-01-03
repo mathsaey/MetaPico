@@ -8,7 +8,7 @@
 
 /* Begin PBXFileReference section */
 		D558251814B28E6300AC4558 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		D558251914B2912B00AC4558 /* README.MD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.MD; sourceTree = "<group>"; };
+		D558251F14B2953300AC4558 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../XPico/README.md; sourceTree = "<group>"; };
 		D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ABSTRSYN.PCO; sourceTree = "<group>"; };
 		D5E36EC714AB7DD4003623BC /* CASE.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CASE.PCO; sourceTree = "<group>"; };
 		D5E36EC814AB7DD4003623BC /* CONCRSYN.PCO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONCRSYN.PCO; sourceTree = "<group>"; };
@@ -27,7 +27,7 @@
 		D5E36EB914AB7DBB003623BC = {
 			isa = PBXGroup;
 			children = (
-				D558251914B2912B00AC4558 /* README.MD */,
+				D558251F14B2953300AC4558 /* README.md */,
 				D558251814B28E6300AC4558 /* Makefile */,
 				D5E36EC614AB7DD4003623BC /* ABSTRSYN.PCO */,
 				D5E36EC714AB7DD4003623BC /* CASE.PCO */,
