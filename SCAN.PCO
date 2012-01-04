@@ -4,6 +4,9 @@
 `*  VUB Programming Technology Lab   *`
 `*              (c)1997              *`
 `*-----------------------------------*`
+
+`Deze tokens zijn de output die uiteindelijk wordt teruggegeven`
+
 { AOP_token:  1;
   CAT_token:  2;
   CEQ_token:  3;
@@ -24,43 +27,52 @@
   SMC_token: 18; 
   TXT_token: 19;
   XOP_token: 20;
+
+  `Added tokens for the iterate and generate functions`
+  lIterate_token : 21;
+  lGenerate_token: 22;
+  rIterate_token: 23;
+  rGenerate_token: 24;
   
   scan_data: void;
   
   scan():
     error('scanner not initialized');
-        
+     
+`Categorieen, input wordt letter per letter gescand, dus de scanner zou niet meteen de volledige naam kunnen teruggeven, dit gedeelte is puur intern`
   init_scan(Str):
-    { aop:  1;
-      apo:  2;
-      bkq:  3;
-      cat:  4;
-      col:  5;
-      com:  6;
-      dgt:  7;
-      eol:  8;
-      eql:  9;
-      exp: 10;
-      ill: 11; 
-      lbc: 12;
-      lbr: 13;
-      lpr: 14;
-      ltr: 15;
-      mns: 16;
-      mop: 17;
-      per: 18;
-      pls: 19;
-      quo: 20;
-      rbc: 21;
-      rbr: 22;
-      rop: 23;
-      rpr: 24;
-      smc: 25;
-      wsp: 26;
-      xop: 27;
+    { aop:  1;  `$ % | ~`
+      apo:  2;  `'`
+      bkq:  3;  `comment`
+      cat:  4;  `@`
+      col:  5;  `:`
+      com:  6;  `,`
+      dgt:  7;  `digit`
+      eol:  8;  `end of line`
+      eql:  9;  `=`
+      exp: 10;  `e, E`
+      ill: 11;  `illegal charachter`
+      lbc: 12;  `{`
+      lbr: 13;  `[`
+      lpr: 14;  `(`
+      ltr: 15;  `letters, underscore zonder e E`
+      mns: 16;  `-`
+      mop: 17;  `* & / \ `
+      per: 18;  `.`
+      pls: 19;  `+`
+      quo: 20;  `"`
+      rbc: 21;  `}`
+      rbr: 22;  `]`
+      rop: 23;  `# < >`
+      rpr: 24;  `)`
+      smc: 25;  `;`
+      wsp: 26;  `spatie`
+      xop: 27;  `! ? ^`
 
-      siz: 27;
-        
+      siz: 27; `Dient voor de mask functie`
+
+`Voor elke ASCII waarde is hier een categorie opgegeven`
+
       ch_tab: [`end` wsp, wsp, wsp, wsp, wsp, wsp, wsp, 
                 wsp, wsp, wsp, wsp, wsp, eol, wsp, wsp, 
                 wsp, wsp, wsp, wsp, wsp, wsp, wsp, wsp, 
@@ -127,19 +139,24 @@
         { t[pos-hold]: input[(hold:= hold+1)-1];
           scan_data:= number(implode(t));
           Tkn };
-                
+        
+      `Kijkt na of een waarde in de mask lijst staat`
       check(allowed):
         if(ch = 0, false, allowed[ch_tab[ch]]);
         
+    `Kijkt na of een waarde niet in de mask lijst staat`
       uncheck(allowed):
         if(ch = 0, false, not(allowed[ch_tab[ch]]));
-        
+      
+      `Maakt lijst aan die even lang is als aantal tokens,`
+      `Zet op true voor elke waarde in argumentenlijst`
       mask@list:
         { msk[siz]: false;
           for(k: 1, k:= k+1, not(k > size(list)), 
               msk[list[k]]:= true);
           msk };
         
+      `Vector met true/false`
       apo_allowed: mask(apo);
       apx_allowed: mask(apo,eol);
       bkq_allowed: mask(bkq,eol);
@@ -153,6 +170,10 @@
       qux_allowed: mask(eol,quo);
       sgn_allowed: mask(pls,mns);
       wsp_allowed: mask(wsp,eol);
+
+    `Checks collums`
+     col_allowed: mask(col);
+     rbc_allowed: mask(rbc);
         
       operator(Tkn):
         { freeze();
@@ -195,12 +216,19 @@
           
       cat_fun():  
         next_ch(CAT_token);
-          
+     
+    `Added :} checks here`
       col_fun():
         { skip_ch();
-          if(check(eql_allowed),
-             next_ch(CEQ_token),
-             COL_token) };
+            if (check(eql_allowed), next_ch(CEQ_token),
+
+                if(check(rbc_allowed), next_ch(rIterate_token),
+
+                    if(check(col_allowed), 
+                            {skip_ch();
+                            if(check(rbc_allowed), next_ch(rGenerate_token), COL_token)
+                                },
+             COL_token))) }; 
           
       com_fun():  
         next_ch(COM_token);
@@ -217,9 +245,15 @@
       ill_fun():
         { error('illegal character');
           END_token };
-          
-      lbc_fun():  
-        next_ch(LBC_token);
+       
+    `Added : checks here`
+    lbc_fun():
+        { skip_ch();
+        if(check(col_allowed),
+            { skip_ch(); 
+                if(check(col_allowed), next_ch(lGenerate_token), next_ch(lIterate_token))},
+            LBC_token)
+        };
           
       lbr_fun():  
         next_ch(LBR_token);
@@ -265,12 +299,12 @@
       xop_fun():
         operator(XOP_token);
           
-      fun_tab: [ aop_fun,
-                 apo_fun,
-                 bkq_fun,
-                 cat_fun,
-                 col_fun,
-                 com_fun,
+      fun_tab: [ aop_fun, 
+                 apo_fun, 
+                 bkq_fun, 
+                 cat_fun, 
+                 col_fun, 
+                 com_fun, 
                  dgt_fun,
                  wsp_fun,
                  rop_fun,
@@ -279,7 +313,7 @@
                  lbc_fun,
                  lbr_fun,
                  lpr_fun,
-                 ltr_fun,
+                 ltr_fun, `ltr_fun komt twee keer voor, een keer voor letters, een keer voor e/E, wat is het nut van die e E?`
                  aop_fun,
                  mop_fun,
                  ill_fun,
@@ -290,7 +324,7 @@
                  rop_fun,
                  rpr_fun,
                  smc_fun,
-                 wsp_fun,
+                 wsp_fun, 
                  xop_fun ];
 
                  
@@ -303,7 +337,8 @@
       scan():=
         if(ch = 0,
            END_token,
-           { fun: fun_tab[ch_tab[ch]];
+           { fun: fun_tab[ch_tab[ch]];  `In de ch tabel word de categorie opgezocht, deze wordt dan weer doorgegeven aan de functie tabel, waar dan de juiste procedure voor de token wordt gezocht`
+             display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); `Leest welke functie wordt opgeroepen`
              fun() });
                  
       init_scan(Str) };

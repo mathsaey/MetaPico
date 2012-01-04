@@ -4,6 +4,9 @@
 `*  VUB Programming Technology Lab   *`
 `*              (c)1997              *`
 `*-----------------------------------*`
+
+`Krijgt een inputstream van de scanner`
+
 { read(Str):
     { token: void;
       begin_str: 'begin';
@@ -192,7 +195,7 @@
          
       read(Str):= 
         { init_scan(Str); 
-          token := scan(); 
+          token := scan();
           expression() };
 
       read(Str) };
