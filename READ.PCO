@@ -11,6 +11,7 @@
     { token: void;
       begin_str: 'begin';
       tab_str:   'tab';
+
       msg_tab: [ 'additive operator',
                  'application',
                  'assignment',
@@ -30,7 +31,13 @@
                  'right parenthesis',
                  'semicolon',
                  'text',
-                 'exponentiation operator' ];
+                 'exponentiation operator',
+
+                `Extra errors for iterate and generate tokens`
+                'left iterator brace',
+                'left generator brace',
+                'right iterator brace',
+                'right generator brace'];
                                                            
       message@any:
         error('Unexpected ', msg_tab[token]);
@@ -147,6 +154,16 @@
              APL(tab_str, next(Empty)),
              APL(tab_str, list(COM_token, RBR_token))) };
 
+    `Functions added for iterators and generators`
+    colbraces():
+        {skip();
+                ITR(list(SMC_token, RIT_token))};
+
+    colcolbraces():
+        {skip();
+                GEN(list(SMC_token, RGE_token))};
+
+
       ref_case: case(NBR_token => number,
                      FRC_token => fraction,
                      TXT_token => text,
@@ -158,7 +175,13 @@
                      LPR_token => parentheses,
                      LBC_token => braces,
                      LBR_token => brackets,
+                        
+                        `Added iterator and generator tokens`
+                        LIT_token => colbraces,
+                        LGE_token => colcolbraces,
+
                           else => message);
+
       reference():=
         { cas: ref_case(token); 
           cas() };
@@ -184,10 +207,14 @@
       assignment(Inv): 
         SET(next(Inv), expression());
 
+      `Kijkt simpelweg na of het def of assignment is`
+      `of simpelweg een directe aanroep`
       exp_case: case(COL_token => definition,
                      CEQ_token => assignment,
                           else => identity);
 
+      `expression::= invocation : expression`
+      `expression::= invocation := expression`
       expression():= 
         { inv: invocation();
           cas: exp_case(token); 

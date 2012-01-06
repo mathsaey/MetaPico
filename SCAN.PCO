@@ -7,32 +7,32 @@
 
 `Deze tokens zijn de output die uiteindelijk wordt teruggegeven`
 
-{ AOP_token:  1;
-  CAT_token:  2;
-  CEQ_token:  3;
-  COL_token:  4;
-  COM_token:  5;
-  END_token:  6;
-  FRC_token:  7;
-  LBC_token:  8;
-  LBR_token:  9;
-  LPR_token: 10;
-  MOP_token: 11;
-  NAM_token: 12;
-  NBR_token: 13;
-  RBC_token: 14;
-  RBR_token: 15;
-  ROP_token: 16;
-  RPR_token: 17;
-  SMC_token: 18; 
-  TXT_token: 19;
-  XOP_token: 20;
+{ AOP_token:  1;    `additieve operator` `+ of -`
+  CAT_token:  2;    `@`
+  CEQ_token:  3;    `:=`
+  COL_token:  4;    `:`
+  COM_token:  5;    `,`
+  END_token:  6;    `end`
+  FRC_token:  7;    `breuk` `de breuk`
+  LBC_token:  8;    `{`
+  LBR_token:  9;    `[`
+  LPR_token: 10;    `(`
+  MOP_token: 11;    `multiplicatieve operator` `*, /, // of \\`
+  NAM_token: 12;    `name`  `the actual name`
+  NBR_token: 13;    `number`    `the number`
+  RBC_token: 14;    `}`
+  RBR_token: 15;    `]`
+  ROP_token: 16;    `relational operator`   `<,>, of =`
+  RPR_token: 17;    `)`
+  SMC_token: 18;    `;`
+  TXT_token: 19;    `strings`   `de tekst`
+  XOP_token: 20;    `exponentiele operator` `^`
 
   `Added tokens for the iterate and generate functions`
-  lIterate_token : 21;
-  lGenerate_token: 22;
-  rIterate_token: 23;
-  rGenerate_token: 24;
+  LIT_token : 21;   `{:`
+  LGE_token: 22;    `{::`
+  RIT_token: 23;    `:}`
+  RGE_token: 24;    `::}`
   
   scan_data: void;
   
@@ -222,11 +222,11 @@
         { skip_ch();
             if (check(eql_allowed), next_ch(CEQ_token),
 
-                if(check(rbc_allowed), next_ch(rIterate_token),
+                if(check(rbc_allowed), next_ch(RIT_token),
 
                     if(check(col_allowed), 
                             {skip_ch();
-                            if(check(rbc_allowed), next_ch(rGenerate_token), COL_token)
+                            if(check(rbc_allowed), next_ch(RGE_token), COL_token)
                                 },
              COL_token))) }; 
           
@@ -251,7 +251,7 @@
         { skip_ch();
         if(check(col_allowed),
             { skip_ch(); 
-                if(check(col_allowed), next_ch(lGenerate_token), next_ch(lIterate_token))},
+                if(check(col_allowed), next_ch(LGE_token), LIT_token)},
             LBC_token)
         };
           
