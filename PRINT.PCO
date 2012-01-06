@@ -84,7 +84,12 @@
             
       print_dictionary(Exp): 
         display('<dictionary>');
-            
+
+    `Added print stop function`
+      print_stop(Exp):
+         display('<stop>');
+
+     `Added print stop to case`
       exp_case: case(NBR_tag => print_number,
                      FRC_tag => print_fraction,
                      TXT_tag => print_text,
@@ -97,7 +102,8 @@
                      DEF_tag => print_definition,
                      SET_tag => print_assignment,
                      DCT_tag => print_dictionary,
-                     VOI_tag => print_void);
+                     VOI_tag => print_void,
+                     STO_tag => print_stop);
       
       print_expression(Exp):=
         { cas: exp_case(Exp[TAG_idx]);

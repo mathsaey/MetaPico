@@ -218,15 +218,17 @@
     accept_fun@Arg:
       arg_0(Arg, deify_TXT(accept()));
     
+`Added is_stop native`
     nat_tab: ['+', '-', '*', '/', '//', '\\', '^', 
               '<', '=', '>', 'trunc', 'abs', 'char', 
               'ord', 'number', 'sqrt', 'sin', 'cos',
               'tan', 'arcsin', 'arccos', 'arctan',  
               'exp', 'log', 'explode', 'implode', 
               'is_number', 'is_fraction', 'is_text', 
-              'is_function', 'is_table', 'is_void', 
-              'size', 'display','accept' ];
+              'is_function', 'is_table', 'is_void',
+              'size', 'display','accept', 'is_stop' ];
 
+`Added is_stop`
     fun_tab: [add_fun,
               sub_fun,
               mul_fun,
@@ -261,7 +263,8 @@
               type_fun(VOI_tag),
               size_fun,
               display_fun,
-              accept_fun];
+              accept_fun,
+              type_fun(STO_tag) ];
 
       make_global():=
         {global: make_dict();
@@ -274,6 +277,10 @@
          global:= add('false', Void, global);
          global:= add('eoln' , Eoln, global);
          global:= add('void' , Void, global);
+
+        `Added stop to the global dictionary`
+        global:= add('stop', Stop, global);
+
          init_eval(global);
          for(idx: 1, idx:= idx+1, 
              not(idx > size(def_tab)),

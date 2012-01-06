@@ -9,6 +9,9 @@
   False: void;
   True:  void;
   Void:  void;
+
+`added stop`
+  Stop: void;
   
   TAG_idx:  1;
   
@@ -93,13 +96,17 @@
   VOI():
     [ VOI_tag ];
 
+`added stop, itr and gen tags`
+  STO_tag: 14;
+  STO():
+    [ STO_tag ];
 
-  ITR_TAG: 14;
+  ITR_TAG: 15;
   ITR(exp):
     [ITR_TAG, exp];
   ITR_EXP_idx: 2;
 
-  GEN_TAG: 15;
+  GEN_TAG: 16;
   GEN(exp):
     [GEN_TAG, exp];
   GEN_EXP_idx: 2;
@@ -107,5 +114,8 @@
   Empty:= TAB([]);
   Eoln := TXT(eoln);
   Void := VOI();
+
+`added stop tag`
+  Stop := STO();
 
   display('grammar installed', eoln) }

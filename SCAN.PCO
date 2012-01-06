@@ -338,7 +338,7 @@
         if(ch = 0,
            END_token,
            { fun: fun_tab[ch_tab[ch]];  `In de ch tabel word de categorie opgezocht, deze wordt dan weer doorgegeven aan de functie tabel, waar dan de juiste procedure voor de token wordt gezocht`
-             display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); `Leest welke functie wordt opgeroepen`
+             `display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); Leest welke functie wordt opgeroepen`
              fun() });
                  
       init_scan(Str) };
