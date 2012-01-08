@@ -11,6 +11,8 @@
     { token: void;
       begin_str: 'begin';
       tab_str:   'tab';
+      iter_str: 'iterate';
+      gen_str: 'generate';
 
       msg_tab: [ 'additive operator',
                  'application',
@@ -157,11 +159,15 @@
     `Functions added for iterators and generators`
     colbraces():
         {skip();
-                ITR(list(SMC_token, RIT_token))};
+            APL(iter_str, 
+                TAB([APL(begin_str,
+                    list(SMC_token, RIT_token))]))};
 
     colcolbraces():
         {skip();
-                GEN(list(SMC_token, RGE_token))};
+        APL(gen_str, 
+            TAB([APL( gen_str,
+                list(SMC_token, RGE_token))]))};
 
 
       ref_case: case(NBR_token => number,
@@ -207,14 +213,10 @@
       assignment(Inv): 
         SET(next(Inv), expression());
 
-      `Kijkt simpelweg na of het def of assignment is`
-      `of simpelweg een directe aanroep`
       exp_case: case(COL_token => definition,
                      CEQ_token => assignment,
                           else => identity);
 
-      `expression::= invocation : expression`
-      `expression::= invocation := expression`
       expression():= 
         { inv: invocation();
           cas: exp_case(token); 

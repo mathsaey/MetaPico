@@ -17,9 +17,13 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
+    `added iter and gen`
+    ITER_def:  'iterate(lambda()): lambda';
+    GEN_DEF:   'generate(func): void';
+
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def];
+              UNTIL_def, FOR_def, TAB_def, ITER_def, GEN_DEF];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
@@ -217,8 +221,8 @@
     
     accept_fun@Arg:
       arg_0(Arg, deify_TXT(accept()));
+
     
-`Added is_stop native`
     nat_tab: ['+', '-', '*', '/', '//', '\\', '^', 
               '<', '=', '>', 'trunc', 'abs', 'char', 
               'ord', 'number', 'sqrt', 'sin', 'cos',
@@ -226,9 +230,8 @@
               'exp', 'log', 'explode', 'implode', 
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
-              'size', 'display','accept', 'is_stop' ];
+              'size', 'display','accept', 'is_stop'];
 
-`Added is_stop`
     fun_tab: [add_fun,
               sub_fun,
               mul_fun,
@@ -264,7 +267,7 @@
               size_fun,
               display_fun,
               accept_fun,
-              type_fun(STO_tag) ];
+              type_fun(STO_tag)];
 
       make_global():=
         {global: make_dict();

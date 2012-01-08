@@ -140,23 +140,18 @@
           scan_data:= number(implode(t));
           Tkn };
         
-      `Kijkt na of een waarde in de mask lijst staat`
       check(allowed):
         if(ch = 0, false, allowed[ch_tab[ch]]);
         
-    `Kijkt na of een waarde niet in de mask lijst staat`
       uncheck(allowed):
         if(ch = 0, false, not(allowed[ch_tab[ch]]));
       
-      `Maakt lijst aan die even lang is als aantal tokens,`
-      `Zet op true voor elke waarde in argumentenlijst`
       mask@list:
         { msk[siz]: false;
           for(k: 1, k:= k+1, not(k > size(list)), 
               msk[list[k]]:= true);
           msk };
         
-      `Vector met true/false`
       apo_allowed: mask(apo);
       apx_allowed: mask(apo,eol);
       bkq_allowed: mask(bkq,eol);
@@ -171,7 +166,6 @@
       sgn_allowed: mask(pls,mns);
       wsp_allowed: mask(wsp,eol);
 
-    `Checks collums`
      col_allowed: mask(col);
      rbc_allowed: mask(rbc);
         
@@ -313,7 +307,7 @@
                  lbc_fun,
                  lbr_fun,
                  lpr_fun,
-                 ltr_fun, `ltr_fun komt twee keer voor, een keer voor letters, een keer voor e/E, wat is het nut van die e E?`
+                 ltr_fun,
                  aop_fun,
                  mop_fun,
                  ill_fun,
@@ -337,9 +331,9 @@
       scan():=
         if(ch = 0,
            END_token,
-           { fun: fun_tab[ch_tab[ch]];  `In de ch tabel word de categorie opgezocht, deze wordt dan weer doorgegeven aan de functie tabel, waar dan de juiste procedure voor de token wordt gezocht`
-             `display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); Leest welke functie wordt opgeroepen`
-             fun() });
+           { fun: fun_tab[ch_tab[ch]];  
+             `display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); `
+            fun() });
                  
       init_scan(Str) };
 

@@ -96,20 +96,11 @@
   VOI():
     [ VOI_tag ];
 
-`added stop, itr and gen tags`
+`added stop tag`
   STO_tag: 14;
   STO():
     [ STO_tag ];
 
-  ITR_TAG: 15;
-  ITR(exp):
-    [ITR_TAG, exp];
-  ITR_EXP_idx: 2;
-
-  GEN_TAG: 16;
-  GEN(exp):
-    [GEN_TAG, exp];
-  GEN_EXP_idx: 2;
 
   Empty:= TAB([]);
   Eoln := TXT(eoln);
