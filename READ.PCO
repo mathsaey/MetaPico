@@ -166,7 +166,7 @@
     colcolbraces():
         {skip();
         APL(gen_str, 
-            TAB([APL( gen_str,
+            TAB([APL( begin_str,
                 list(SMC_token, RGE_token))]))};
 
 
