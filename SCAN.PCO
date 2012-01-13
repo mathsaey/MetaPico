@@ -7,26 +7,26 @@
 
 `Deze tokens zijn de output die uiteindelijk wordt teruggegeven`
 
-{ AOP_token:  1;    `additieve operator` `+ of -`
-  CAT_token:  2;    `@`
-  CEQ_token:  3;    `:=`
-  COL_token:  4;    `:`
-  COM_token:  5;    `,`
-  END_token:  6;    `end`
-  FRC_token:  7;    `breuk` `de breuk`
-  LBC_token:  8;    `{`
-  LBR_token:  9;    `[`
-  LPR_token: 10;    `(`
-  MOP_token: 11;    `multiplicatieve operator` `*, /, // of \\`
-  NAM_token: 12;    `name`  `the actual name`
-  NBR_token: 13;    `number`    `the number`
-  RBC_token: 14;    `}`
-  RBR_token: 15;    `]`
-  ROP_token: 16;    `relational operator`   `<,>, of =`
-  RPR_token: 17;    `)`
-  SMC_token: 18;    `;`
-  TXT_token: 19;    `strings`   `de tekst`
-  XOP_token: 20;    `exponentiele operator` `^`
+{ AOP_token:  1;    
+  CAT_token:  2;    
+  CEQ_token:  3;   
+  COL_token:  4;   
+  COM_token:  5;  
+  END_token:  6;   
+  FRC_token:  7;   
+  LBC_token:  8;    
+  LBR_token:  9;    
+  LPR_token: 10;  
+  MOP_token: 11; 
+  NAM_token: 12; 
+  NBR_token: 13;  
+  RBC_token: 14;  
+  RBR_token: 15;  
+  ROP_token: 16;  
+  RPR_token: 17;  
+  SMC_token: 18; 
+  TXT_token: 19;   
+  XOP_token: 20;  
 
   `Added tokens for the iterate and generate functions`
   LIT_token : 21;   `{:`
@@ -39,39 +39,36 @@
   scan():
     error('scanner not initialized');
      
-`Categorieen, input wordt letter per letter gescand, dus de scanner zou niet meteen de volledige naam kunnen teruggeven, dit gedeelte is puur intern`
   init_scan(Str):
-    { aop:  1;  `$ % | ~`
-      apo:  2;  `'`
-      bkq:  3;  `comment`
-      cat:  4;  `@`
-      col:  5;  `:`
-      com:  6;  `,`
-      dgt:  7;  `digit`
-      eol:  8;  `end of line`
-      eql:  9;  `=`
-      exp: 10;  `e, E`
-      ill: 11;  `illegal charachter`
-      lbc: 12;  `{`
-      lbr: 13;  `[`
-      lpr: 14;  `(`
-      ltr: 15;  `letters, underscore zonder e E`
-      mns: 16;  `-`
-      mop: 17;  `* & / \ `
-      per: 18;  `.`
-      pls: 19;  `+`
-      quo: 20;  `"`
-      rbc: 21;  `}`
-      rbr: 22;  `]`
-      rop: 23;  `# < >`
-      rpr: 24;  `)`
-      smc: 25;  `;`
-      wsp: 26;  `spatie`
-      xop: 27;  `! ? ^`
+    { aop:  1;  
+      apo:  2;  
+      bkq:  3;  
+      cat:  4;  
+      col:  5;  
+      com:  6;  
+      dgt:  7;  
+      eol:  8;  
+      eql:  9;  
+      exp: 10; 
+      ill: 11;  
+      lbc: 12;  
+      lbr: 13;  
+      lpr: 14; 
+      ltr: 15; 
+      mns: 16;
+      mop: 17;
+      per: 18;  
+      pls: 19;  
+      quo: 20; 
+      rbc: 21; 
+      rbr: 22;  
+      rop: 23; 
+      rpr: 24;  
+      smc: 25; 
+      wsp: 26; 
+      xop: 27;  
 
-      siz: 27; `Dient voor de mask functie`
-
-`Voor elke ASCII waarde is hier een categorie opgegeven`
+      siz: 27; 
 
       ch_tab: [`end` wsp, wsp, wsp, wsp, wsp, wsp, wsp, 
                 wsp, wsp, wsp, wsp, wsp, eol, wsp, wsp, 
@@ -332,7 +329,6 @@
         if(ch = 0,
            END_token,
            { fun: fun_tab[ch_tab[ch]];  
-             `display("Start char: ", char(ch), " Func: ", fun, " data: ", scan_data, eoln); `
             fun() });
                  
       init_scan(Str) };

@@ -4,13 +4,12 @@
 `*  VUB Programming Technology Lab   *`
 `*              (c)1997              *`
 `*-----------------------------------*`
-
-`Krijgt een inputstream van de scanner`
-
 { read(Str):
     { token: void;
       begin_str: 'begin';
       tab_str:   'tab';
+
+`Added iter and generate strings`
       iter_str: 'iterate';
       gen_str: 'generate';
 

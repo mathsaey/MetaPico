@@ -318,9 +318,8 @@
          global:= add('eoln' , Eoln, global);
          global:= add('void' , Void, global);
 
-        `Added stop and genState to the global dictionary`
+        `Added stop to the global dictionary`
         global:= add('stop', Stop, global);
-        `global:= add('genState', Void, global);`
 
          init_eval(global);
          for(idx: 1, idx:= idx+1, 
