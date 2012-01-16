@@ -241,7 +241,8 @@
 
     `Native function that stores the continuation`
     set_genState@Arg: 
-        call({genState:= cont; eval(get_EXP(Arg))});
+        {res: call({genState:= cont; eval(get_EXP(Arg))});
+            if(res[TAG_idx] = VOI_tag, Stop, res)};
 
     `Stores the continuation and returns the function`
     gen_fun(exp, dct): 
