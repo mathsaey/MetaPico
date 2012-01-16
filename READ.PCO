@@ -9,7 +9,7 @@
       begin_str: 'begin';
       tab_str:   'tab';
 
-`Added strings`
+    `Added iter and generate strings`
       iter_str: 'iterate';
       gen_str: 'generate';
       tbl_str: 'tbl_comp';
