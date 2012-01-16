@@ -230,8 +230,8 @@
       arg_0(Arg, deify_TXT(accept()));
 
 
-    `Generate functions`
-    `******************`
+    `Added Generate functions`
+    `************************`
 
     `Global variable that keeps track of the continuation`
     genState: void;
