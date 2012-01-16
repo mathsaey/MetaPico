@@ -17,12 +17,20 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
-    `added iter`
+    `added iter and table comprehensions`
     ITER_def:  'iterate(iterator()): iterator';
+    TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): 
+                    {loop(siz, next): 
+                        if(is_stop(next), tab[siz - 1]:void,
+                            if(filter(next), 
+                                {   tab: loop(siz + 1, iter());
+                                    tab[siz]:= f(next)},
+                                loop(siz, iter())));
+                        loop(1, iter())}';
 
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def, ITER_def];
+              UNTIL_def, FOR_def, TAB_def, ITER_def, TBL_COMP_def];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
