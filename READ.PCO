@@ -9,9 +9,10 @@
       begin_str: 'begin';
       tab_str:   'tab';
 
-`Added iter and generate strings`
+`Added strings`
       iter_str: 'iterate';
       gen_str: 'generate';
+      tbl_str: 'tbl_comp';
 
       msg_tab: [ 'additive operator',
                  'application',
@@ -34,11 +35,14 @@
                  'text',
                  'exponentiation operator',
 
-                `Extra errors for iterate and generate tokens`
+                `Added extra errors`
                 'left iterator brace',
                 'left generator brace',
                 'right iterator brace',
-                'right generator brace'];
+                'right generator brace',
+                'left table comprehension brace',
+                'right table comprehension brace',
+                'middle table comprehension line'];
                                                            
       message@any:
         error('Unexpected ', msg_tab[token]);
@@ -155,7 +159,7 @@
              APL(tab_str, next(Empty)),
              APL(tab_str, list(COM_token, RBR_token))) };
 
-    `Functions added for iterators and generators`
+    `Added functions for iterators, generators and table comprehensions`
     colbraces():
         {skip();
             APL(iter_str, 
@@ -167,6 +171,28 @@
         APL(gen_str, 
             TAB([APL( begin_str,
                 list(SMC_token, RGE_token))]))};
+
+    
+
+    colbrackets():
+        {skip();
+        exp_tbl: list(COM_token, VTL_token);
+        gen_tbl: list(COM_token, RCB_token);
+
+        exp_tbl:= exp_tbl[TAB_TAB_idx];
+        gen_tbl:= gen_tbl[TAB_TAB_idx];
+        
+        if(or(not(size(exp_tbl) = 1),
+             not(size(gen_tbl) = 2)),
+            error('Wrong table comprehension syntax'),
+            void);
+
+        exp: exp_tbl[1];
+        iter: gen_tbl[1];
+        filter: gen_tbl[2];
+
+        APL(tbl_str, TAB([exp, iter, filter]))};
+        
 
 
       ref_case: case(NBR_token => number,
@@ -181,10 +207,12 @@
                      LBC_token => braces,
                      LBR_token => brackets,
                         
-                        `Added iterator and generator tokens`
+                        `Added tokens`
                         LIT_token => colbraces,
                         LGE_token => colcolbraces,
-
+                        LCB_token => colbrackets,
+                        VTL_token => operator,
+                        `We give VTL the same behaviour as AOP`
                           else => message);
 
       reference():=
