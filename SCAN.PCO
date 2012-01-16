@@ -29,7 +29,7 @@
   XOP_token: 20;  
 
   `Added tokens`
-  LIT_token : 21;   `{:`
+  LIT_token: 21;    `{:`
   LGE_token: 22;    `{::`
   RIT_token: 23;    `:}`
   RGE_token: 24;    `::}`
@@ -90,7 +90,7 @@
                 ill, ltr, ltr, ltr, ltr, exp, ltr, ltr, 
                 ltr, ltr, ltr, ltr, ltr, ltr, ltr, ltr, 
                 ltr, ltr, ltr, ltr, ltr, ltr, ltr, ltr, 
-                ltr, ltr, ltr, lbc, vtl, rbc, aop, ill, `token changed here`
+                ltr, ltr, ltr, lbc, vtl, rbc, aop, ill, `Added vtl token here`
                 ill, ill, ill, ill, ill, ill, ill, ill, 
                 ill, ill, ill, ill, ill, ill, ill, ill, 
                 ill, ill, ill, ill, ill, ill, ill, ill,       
@@ -243,7 +243,7 @@
         { error('illegal character');
           END_token };
        
-    `Added : checks here`
+    `Added : checks`
     lbc_fun():
         { skip_ch();
         if(check(col_allowed),
@@ -252,12 +252,12 @@
             LBC_token)
         };
          
-      `Added : checks here`
+      `Added : checks`
       lbr_fun(): 
         {skip_ch();
             if(check(col_allowed), 
                 next_ch(LCB_token), 
-                next_ch(LBR_token))};
+                LBR_token)};
           
       lpr_fun(): 
         next_ch(LPR_token);
