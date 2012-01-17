@@ -17,8 +17,6 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
-    `added iter and table comprehensions`
-    ITER_def:  'iterate(iterator()): iterator';
     TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): 
                     {loop(siz, next): 
                         if(is_stop(next), tab[siz - 1]:void,
@@ -30,7 +28,7 @@
 
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def, ITER_def, TBL_COMP_def];
+              UNTIL_def, FOR_def, TAB_def, TBL_COMP_def];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
@@ -230,16 +228,9 @@
       arg_0(Arg, deify_TXT(accept()));
 
 
-    `Added Generate functions`
-    `************************`
-
-    `Global variable that keeps track of the continuation`
-    genState: void;
+    `Added functions`
+    `***************`
     
-    `Creates the body of the function we will return to the user`
-    make_gen_BOD(exp):
-        APL('set_genState', exp);
-
     `Returns the expression from an argument table without evaluating it`
     get_EXP(tbl):
         {tab: reify_TAB(tbl);
@@ -247,12 +238,26 @@
             tab[1], 
             error('1 argument required!'))};
 
+    `Creates and returns the iterator`
+    iter_fun(exp, dct):
+        FUN('iterator',
+            Empty,
+            get_EXP(exp),
+            dct);
+
+    `Global variable that keeps track of the continuation`
+    genState: void;
+
+    `Creates the body of the function we will return to the user`
+    make_gen_BOD(exp):
+        APL('set_genState', exp);
+
     `Native function that stores the continuation`
     set_genState@Arg: 
         {res: call({genState:= cont; eval(get_EXP(Arg))});
             if(res[TAG_idx] = VOI_tag, Stop, res)};
 
-    `Stores the continuation and returns the function`
+    `Creates and returns the generator`
     gen_fun(exp, dct): 
         FUN('generator', 
             Empty , 
@@ -273,7 +278,7 @@
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
               'size', 'display','accept', 'is_stop', 
-              'yield', 'generate', 'set_genState'];
+              'yield', 'generate', 'set_genState', 'iterate'];
 
     fun_tab: [add_fun,
               sub_fun,
@@ -313,7 +318,8 @@
               type_fun(STO_tag),
               yield_fun,
               gen_fun, 
-              set_genState];
+              set_genState,
+              iter_fun];
 
       make_global():=
         {global: make_dict();

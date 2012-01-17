@@ -93,7 +93,7 @@
                      eval_call(exp, val),
                      error('illegal argument')) }),
              if(exp[TAG_idx] = NAT_tag,
-                if(nam = 'generate', 
+                if(or (nam = 'generate', nam= 'iterate'), 
                     { nat: exp[NAT_NAT_idx];
                         nat(arg,DCT) },
                     { nat: exp[NAT_NAT_idx]; 
