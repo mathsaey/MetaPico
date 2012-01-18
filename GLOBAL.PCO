@@ -17,18 +17,9 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
-    TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): 
-                    {loop(siz, next): 
-                        if(is_stop(next), tab[siz - 1]:void,
-                            if(filter(next), 
-                                {   tab: loop(siz + 1, iter());
-                                    tab[siz]:= f(next)},
-                                loop(siz, iter())));
-                        loop(1, iter())}';
-
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def, TBL_COMP_def];
+              UNTIL_def, FOR_def, TAB_def];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
@@ -230,7 +221,12 @@
 
     `Added functions`
     `***************`
+
+    `Added globals`
+    iter_str: 'iterator'; `name of the return function`
+    genState: void; `Global variable that keeps track of the continuation`
     
+
     `Returns the expression from an argument table without evaluating it`
     get_EXP(tbl):
         {tab: reify_TAB(tbl);
@@ -238,38 +234,52 @@
             tab[1], 
             error('1 argument required!'))};
 
-    `Creates and returns the iterator`
-    iter_fun(exp, dct):
-        FUN('iterator',
+    `creates and returns the iterator`
+    create_iterator(exp, dct):
+        FUN(iter_str,
             Empty,
-            get_EXP(exp),
+            exp,
             dct);
-
-    `Global variable that keeps track of the continuation`
-    genState: void;
-
-    `Creates the body of the function we will return to the user`
-    make_gen_BOD(exp):
-        APL('set_genState', exp);
 
     `Native function that stores the continuation`
     set_genState@Arg: 
         {res: call({genState:= cont; eval(get_EXP(Arg))});
             if(res[TAG_idx] = VOI_tag, Stop, res)};
 
-    `Creates and returns the generator`
+
+    `Returns the iterator`
+    iter_fun(exp, dct):
+        create_iterator(get_EXP(exp),dct);
+
+    `Returns the generator`
     gen_fun(exp, dct): 
-        FUN('generator', 
-            Empty , 
-            make_gen_BOD(exp) , 
-            dct);
+        create_iterator(APL('set_genState', exp), dct);
 
     `Returns the result of an expression`
     yield_fun@Arg:
         arg_1(Arg, continue(genState, p));
 
+    
+    `Table comprehensions native`
+    tbl_comp_fun@Arg:
+        {tbl: Arg[TAB_TAB_idx];
+        f_exp: tbl[1];
+        it_exp: tbl[2];
+        fil_exp: tbl[3];
 
-    `Added yield and generate`
+display(f_exp, eoln, it_exp, eoln, fil_exp, eoln)};
+
+`TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): `
+    `{loop(siz, next): `
+        `if(is_stop(next), tab[siz - 1]:void, `
+            `if(filter(next), `
+                `{   tab: loop(siz + 1, iter());`
+                        `tab[siz]:= f(next)},`
+            `loop(siz, iter())));`
+    `loop(1, iter())}';`
+
+
+    `Added natives`
     nat_tab: ['+', '-', '*', '/', '//', '\\', '^', 
               '<', '=', '>', 'trunc', 'abs', 'char', 
               'ord', 'number', 'sqrt', 'sin', 'cos',
@@ -278,7 +288,7 @@
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
               'size', 'display','accept', 'is_stop', 
-              'yield', 'generate', 'set_genState', 'iterate'];
+              'yield', 'generate', 'set_genState', 'iterate','tbl_comp'];
 
     fun_tab: [add_fun,
               sub_fun,
@@ -319,7 +329,8 @@
               yield_fun,
               gen_fun, 
               set_genState,
-              iter_fun];
+              iter_fun,
+              tbl_comp_fun];
 
       make_global():=
         {global: make_dict();
