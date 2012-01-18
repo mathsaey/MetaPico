@@ -241,6 +241,11 @@
             exp,
             dct);
 
+    `Checks if an expression is an iterator`
+    is_iterator(exp):
+        and(exp[TAG_idx] = FUN_tag,
+            exp[FUN_NAM_idx] = iter_str);
+
     `Native function that stores the continuation`
     set_genState@Arg: 
         {res: call({genState:= cont; eval(get_EXP(Arg))});
@@ -257,7 +262,10 @@
 
     `Returns the result of an expression`
     yield_fun@Arg:
-        arg_1(Arg, continue(genState, p));
+        arg_1(Arg, 
+            if(is_iterator(p),
+                display("iterator!", eoln),
+                continue(genState, p)));
 
     
     `Table comprehensions native`
