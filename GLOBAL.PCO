@@ -17,9 +17,19 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
+    `Added table comprehensions`
+    TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): 
+        {loop(siz, next): 
+            if(is_stop(next), tab[siz - 1]:void, 
+                if(filter(next), 
+                    {   tab: loop(siz + 1, iter());
+                        tab[siz]:= f(next)},
+                    loop(siz, iter())));
+            loop(1, iter())}';
+
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def];
+              UNTIL_def, FOR_def, TAB_def, TBL_COMP_def];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
@@ -257,34 +267,12 @@
         create_iterator(get_EXP(exp),dct);
 
     `Returns the generator`
-    gen_fun(exp, dct): 
+    gen_fun(exp, dct):
         create_iterator(APL('set_genState', exp), dct);
 
     `Returns the result of an expression`
     yield_fun@Arg:
-        arg_1(Arg, 
-            if(is_iterator(p),
-                display("iterator!", eoln),
-                continue(genState, p)));
-
-    
-    `Table comprehensions native`
-    tbl_comp_fun@Arg:
-        {tbl: Arg[TAB_TAB_idx];
-        f_exp: tbl[1];
-        it_exp: tbl[2];
-        fil_exp: tbl[3];
-
-display(f_exp, eoln, it_exp, eoln, fil_exp, eoln)};
-
-`TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): `
-    `{loop(siz, next): `
-        `if(is_stop(next), tab[siz - 1]:void, `
-            `if(filter(next), `
-                `{   tab: loop(siz + 1, iter());`
-                        `tab[siz]:= f(next)},`
-            `loop(siz, iter())));`
-    `loop(1, iter())}';`
+        arg_1(Arg, continue(genState, p));
 
 
     `Added natives`
@@ -296,7 +284,7 @@ display(f_exp, eoln, it_exp, eoln, fil_exp, eoln)};
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
               'size', 'display','accept', 'is_stop', 
-              'yield', 'generate', 'set_genState', 'iterate','tbl_comp'];
+              'yield', 'generate', 'set_genState', 'iterate'];
 
     fun_tab: [add_fun,
               sub_fun,
@@ -337,8 +325,7 @@ display(f_exp, eoln, it_exp, eoln, fil_exp, eoln)};
               yield_fun,
               gen_fun, 
               set_genState,
-              iter_fun,
-              tbl_comp_fun];
+              iter_fun];
 
       make_global():=
         {global: make_dict();
