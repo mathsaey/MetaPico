@@ -80,7 +80,6 @@
           dct:= cas(Tab, par, dct);
           call_function(exp, dct) };
 
-    `Added generate support`
       eval_application(Exp):
         { nam: Exp[APL_NAM_idx];
           arg: Exp[APL_ARG_idx];
@@ -93,11 +92,8 @@
                      eval_call(exp, val),
                      error('illegal argument')) }),
              if(exp[TAG_idx] = NAT_tag,
-                if(or (nam = 'generate', nam= 'iterate'), 
-                    { nat: exp[NAT_NAT_idx];
-                        nat(arg,DCT) },
-                    { nat: exp[NAT_NAT_idx]; 
-                        nat@arg }),
+                { nat: exp[NAT_NAT_idx]; 
+                  nat@arg },
                 error('(native) function required'))) };
 
       eval_tabulation(Exp):
