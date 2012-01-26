@@ -6,6 +6,9 @@
 `*-----------------------------------*`
 { eval(Exp):
     error('evaluator not initialized');
+
+  override_dct(Exp, Dct):
+        error('evaluator not initialized');
         
   init_eval(Dct):
     { DCT: Dct;
@@ -217,6 +220,10 @@
       init_eval(Dct):=
         { DCT:= Dct;
           void };
+
+    override_dct(Exp, Dct):= 
+        call_function(Exp, Dct);
+
 
       eval(Exp):=
         { tag: Exp[TAG_idx];
