@@ -235,7 +235,7 @@
     `Added globals`
     iter_str: 'iterator'; `name of the return function`
     genState: void; `Global variable that keeps track of the continuation`
-    
+    returnState: void; `Global variable that keeps track of where we return our result`
 
     `Returns the expression from an argument table without evaluating it`
     get_EXP(tbl):
@@ -244,12 +244,6 @@
             tab[1], 
             error('1 argument required!'))};
 
-    `creates and returns the iterator`
-    create_iterator(exp, dct):
-        FUN(iter_str,
-            Empty,
-            exp,
-            dct);
 
     `Checks if an expression is an iterator`
     is_iterator(exp):
@@ -257,22 +251,40 @@
             exp[FUN_NAM_idx] = iter_str);
 
     `Native function that stores the continuation`
-    set_genState@Arg: 
-        {res: call({genState:= cont; eval(get_EXP(Arg))});
-            if(res[TAG_idx] = VOI_tag, Stop, res)};
+    set_state@Arg: 
+        if(is_void(genState),
+            call({if(is_void(returnState), 
+                        returnState:= cont, 
+                        void);
+                eval(get_EXP(Arg)); genState:= cont; Stop}),
+            continue(genState, Stop));
 
+
+    `Function that handles returning values`
+    return_val(res):
+        if(is_iterator(res),
+            {   genState := void; 
+                res: override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx])},
+            continue(returnState, res));
+
+
+    `creates, stores and returns the iterator`
+    create_iterator(exp):
+        eval(DEF(APL(iter_str, Empty), exp));
 
     `Returns the iterator`
-    iter_fun(exp, dct):
-        create_iterator(get_EXP(exp),dct);
+    iter_fun@Arg:
+        create_iterator(get_EXP(Arg));
 
     `Returns the generator`
-    gen_fun(exp, dct):
-        create_iterator(APL('set_genState', exp), dct);
+    gen_fun@Arg:
+        create_iterator(APL('set_state', Arg));
 
     `Returns the result of an expression`
     yield_fun@Arg:
-        arg_1(Arg, continue(genState, p));
+        call({genState:= cont; 
+            arg_1(Arg, return_val(p))});
+
 
 
     `Added natives`
@@ -284,7 +296,7 @@
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
               'size', 'display','accept', 'is_stop', 
-              'yield', 'generate', 'set_genState', 'iterate'];
+              'yield', 'generate', 'set_state', 'iterate'];
 
     fun_tab: [add_fun,
               sub_fun,
@@ -324,7 +336,7 @@
               type_fun(STO_tag),
               yield_fun,
               gen_fun, 
-              set_genState,
+              set_state,
               iter_fun];
 
       make_global():=
