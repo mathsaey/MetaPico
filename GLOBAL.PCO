@@ -277,19 +277,31 @@
         call({genState:= cont;
             arg_1(Arg, return_val(p))});
 
+    `Function that handles the table comprehensions`
+    tbl_comp_fun@Arg:
+        {create_tbl_fun(nam, exp):
+            eval(DEF(APL(nam, TAB([VAR('e')])), exp));
+        launch_tbl_fun(nam, arg):
+            eval(APL(nam, TAB([arg])));
 
+        tbl: Arg[2];
+        if(not(size(tbl) = 3), error('3 arguments required'), Void);
+        iter: eval(tbl[2]);
+        func: tbl[1]; create_tbl_fun('func', func);
+        filt: tbl[3]; create_tbl_fun('filt', filt);
 
+        get_next():
+            override_dct(iter[FUN_EXP_idx], iter[FUN_DCT_idx]);
 
-`Added table comprehensions`
-`TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): `
-`{loop(siz, next): `
-`if(is_stop(next), tab[siz - 1]:void, `
-`if(filter(next), `
-`{   tab: loop(siz + 1, iter());`
-`tab[siz]:= f(next)},`
-`loop(siz, iter())));`
-`loop(1, iter())}';`
-
+        loop(siz, next):
+            if(next[TAG_idx]= STO_tag, tab[siz - 1]: Void,
+                if({res: launch_tbl_fun('filt', next);
+                    and(res[TAG_idx] = FUN_tag, 
+                    res[FUN_NAM_idx] = 'true')} ,
+                    {   tab: loop(siz + 1, get_next());
+                        tab[siz]:= launch_tbl_fun('func', next)},
+                    loop(siz, get_next())));
+        TAB(loop(1, get_next()))};
 
     `Added natives`
     nat_tab: ['+', '-', '*', '/', '//', '\\', '^', 
@@ -300,7 +312,7 @@
               'is_number', 'is_fraction', 'is_text', 
               'is_function', 'is_table', 'is_void',
               'size', 'display','accept', 'is_stop', 
-              'yield', 'generate', 'set_state', 'iterate'];
+              'yield', 'generate', 'set_state', 'iterate', 'tbl_comp'];
 
     fun_tab: [add_fun,
               sub_fun,
@@ -341,7 +353,8 @@
               yield_fun,
               gen_fun, 
               set_state,
-              iter_fun];
+              iter_fun,
+              tbl_comp_fun];
 
       make_global():=
         {global: make_dict();
