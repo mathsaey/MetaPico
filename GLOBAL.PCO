@@ -17,19 +17,10 @@
     FOR_def:   'for(i,p(),c(),e()):while(c(),{v:e();p();v})';
     TAB_def:   'tab@t:t';
 
-    `Added table comprehensions`
-    TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): 
-        {loop(siz, next): 
-            if(is_stop(next), tab[siz - 1]:void, 
-                if(filter(next), 
-                    {   tab: loop(siz + 1, iter());
-                        tab[siz]:= f(next)},
-                    loop(siz, iter())));
-            loop(1, iter())}';
 
     def_tab: [TRUE_def, FALSE_def, AND_def, OR_def, 
               NOT_def, BEGIN_def, IF_def, WHILE_def, 
-              UNTIL_def, FOR_def, TAB_def, TBL_COMP_def];
+              UNTIL_def, FOR_def, TAB_def];
 
     reify_NBR(Nbr):
       if(Nbr[TAG_idx]=NBR_tag, 
@@ -236,6 +227,7 @@
     iter_str: 'iterator'; `name of the return function`
     genState: void; `Global variable that keeps track of the continuation`
     returnState: void; `Global variable that keeps track of where we return our result`
+    dctState: void; `Keeps track of the dictionary of the generator`
 
     `Returns the expression from an argument table without evaluating it`
     get_EXP(tbl):
@@ -254,18 +246,18 @@
     set_state@Arg: 
         if(is_void(genState),
             call({if(is_void(returnState), 
-                        returnState:= cont, 
-                        void);
+                    returnState:= cont, 
+                    void);
                 eval(get_EXP(Arg)); genState:= cont; Stop}),
-            continue(genState, Stop));
+            {set_dct(dctState); continue(genState, Stop)});
 
 
     `Function that handles returning values`
     return_val(res):
         if(is_iterator(res),
-            {   genState := void; 
-                res: override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx])},
-            continue(returnState, res));
+            {genState := void;
+            override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx])},
+        {dctState:= get_dct(); continue(returnState, res)});
 
 
     `creates, stores and returns the iterator`
@@ -282,9 +274,21 @@
 
     `Returns the result of an expression`
     yield_fun@Arg:
-        call({genState:= cont; 
+        call({genState:= cont;
             arg_1(Arg, return_val(p))});
 
+
+
+
+`Added table comprehensions`
+`TBL_COMP_def: 'tbl_comp(f(e), iter, filter(e)): `
+`{loop(siz, next): `
+`if(is_stop(next), tab[siz - 1]:void, `
+`if(filter(next), `
+`{   tab: loop(siz + 1, iter());`
+`tab[siz]:= f(next)},`
+`loop(siz, iter())));`
+`loop(1, iter())}';`
 
 
     `Added natives`
