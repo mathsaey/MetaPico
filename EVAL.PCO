@@ -7,9 +7,15 @@
 { eval(Exp):
     error('evaluator not initialized');
 
+  `Added Dct function declarations`
   override_dct(Exp, Dct):
         error('evaluator not initialized');
-        
+  get_dct():
+    error('evaluator not initialized');
+
+  set_dct(dct):
+    error('evaluator not initialized');
+
   init_eval(Dct):
     { DCT: Dct;
 
@@ -221,9 +227,12 @@
         { DCT:= Dct;
           void };
 
+    `Added Dct function implementations`
     override_dct(Exp, Dct):= 
         call_function(Exp, Dct);
-
+    
+    get_dct():= DCT;
+    set_dct(Dct):= DCT:= Dct;
 
       eval(Exp):=
         { tag: Exp[TAG_idx];
