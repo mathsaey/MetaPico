@@ -228,6 +228,8 @@
     genState: void; `Global variable that keeps track of the continuation`
     returnState: void; `Global variable that keeps track of where we return our result`
     dctState: void; `Keeps track of the dictionary of the generator`
+    should_reset: true; `Ensures we don't reset the returnState when we don't want to.`
+
 
     `Returns the expression from an argument table without evaluating it`
     get_EXP(tbl):
@@ -236,7 +238,6 @@
             tab[1], 
             error('1 argument required!'))};
 
-
     `Checks if an expression is an iterator`
     is_iterator(exp):
         and(exp[TAG_idx] = FUN_tag,
@@ -244,20 +245,26 @@
 
     `Native function that stores the continuation`
     set_state@Arg: 
-        call({returnState:= cont;
+        call({if(should_reset, returnState:= cont, Void);
             if(is_void(genState),
-                {eval(get_EXP(Arg)); genState:= cont; Stop},
+                {eval(get_EXP(Arg)); 
+                continue(returnState, call({genState:= cont; Stop}))},
                 {set_dct(dctState); continue(genState, Stop)})});
 
 
     `Function that handles returning values`
     return_val(res):
         if(is_iterator(res),
-            {   tmpState: returnState;
-                returnState:= Void;
+            {   tmpGenState: genState;
+                tmpRetState: returnState;
                 genState := void;
                 res: override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx]);
-                if(res[TAG_idx]= STO_tag, returnState:= tmpState, continue(tmpState, res))},
+                should_reset:= false;
+                if(res[TAG_idx]= STO_tag, 
+                    {   returnState:= tmpRetState; 
+                        genState:= tmpGenState; 
+                        should_reset := true}, 
+                    continue(tmpRetState, res))},
             {dctState:= get_dct(); continue(returnState, res)});
 
 
@@ -298,8 +305,8 @@
             if(next[TAG_idx]= STO_tag, tab[siz - 1]: Void,
                 if({res: launch_tbl_fun('filt', next);
                     and(res[TAG_idx] = FUN_tag, 
-                    res[FUN_NAM_idx] = 'true')} ,
-                    {   tab: loop(siz + 1, get_next());
+                        res[FUN_NAM_idx] = 'true')} ,
+                    {tab: loop(siz + 1, get_next());
                         tab[siz]:= launch_tbl_fun('func', next)},
                     loop(siz, get_next())));
         TAB(loop(1, get_next()))};
