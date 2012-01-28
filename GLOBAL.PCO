@@ -244,20 +244,21 @@
 
     `Native function that stores the continuation`
     set_state@Arg: 
-        if(is_void(genState),
-            call({if(is_void(returnState), 
-                    returnState:= cont, 
-                    void);
-                eval(get_EXP(Arg)); genState:= cont; Stop}),
-            {set_dct(dctState); continue(genState, Stop)});
+        call({returnState:= cont;
+            if(is_void(genState),
+                {eval(get_EXP(Arg)); genState:= cont; Stop},
+                {set_dct(dctState); continue(genState, Stop)})});
 
 
     `Function that handles returning values`
     return_val(res):
         if(is_iterator(res),
-            {genState := void;
-            override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx])},
-        {dctState:= get_dct(); continue(returnState, res)});
+            {   tmpState: returnState;
+                returnState:= Void;
+                genState := void;
+                res: override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx]);
+                if(res[TAG_idx]= STO_tag, returnState:= tmpState, continue(tmpState, res))},
+            {dctState:= get_dct(); continue(returnState, res)});
 
 
     `creates, stores and returns the iterator`
@@ -286,12 +287,12 @@
 
         tbl: Arg[2];
         if(not(size(tbl) = 3), error('3 arguments required'), Void);
-        iter: eval(tbl[2]);
-        func: tbl[1]; create_tbl_fun('func', func);
-        filt: tbl[3]; create_tbl_fun('filt', filt);
+        eval(DEF(VAR('iter'), tbl[2]));
+        create_tbl_fun('func', tbl[1]);
+        create_tbl_fun('filt', tbl[3]);
 
         get_next():
-            override_dct(iter[FUN_EXP_idx], iter[FUN_DCT_idx]);
+            eval(APL('iter', Empty));
 
         loop(siz, next):
             if(next[TAG_idx]= STO_tag, tab[siz - 1]: Void,
