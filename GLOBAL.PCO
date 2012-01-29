@@ -243,6 +243,10 @@
         and(exp[TAG_idx] = FUN_tag,
             exp[FUN_NAM_idx] = iter_str);
 
+    `Checks if an expression is the stop type`
+    is_stop(exp):
+        exp[TAG_idx] = STO_tag;
+
     `Native function that stores the continuation`
     set_state@Arg: 
         call({if(should_reset, returnState:= cont, Void);
@@ -260,7 +264,7 @@
                 genState := void;
                 res: override_dct(res[FUN_EXP_idx], res[FUN_DCT_idx]);
                 should_reset:= false;
-                if(res[TAG_idx]= STO_tag, 
+                if(is_stop(exp), 
                     {   returnState:= tmpRetState; 
                         genState:= tmpGenState; 
                         should_reset := true}, 
@@ -302,7 +306,7 @@
             eval(APL('iter', Empty));
 
         loop(siz, next):
-            if(next[TAG_idx]= STO_tag, tab[siz - 1]: Void,
+            if(is_stop(next), tab[siz - 1]: Void,
                 if({res: launch_tbl_fun('filt', next);
                     and(res[TAG_idx] = FUN_tag, 
                         res[FUN_NAM_idx] = 'true')} ,
