@@ -3,10 +3,9 @@ This is the metacircular pico interpreter, written in Pico. All the original cod
 
 #Important
 All changes to the original code will be marked with an added comment. This way changes can be found by using ctrl/cmd + f easily.
-In case a file is broken in any way an online version of the code can be found at the github repository of this project. https://github.com/mathsaey/MetaPico
 
 #Goal
-The goal of this project is to add iterators, generators and simple table comprehensions to the pico evaluator.
+The goal of this project is to add iterators, generators and simple table comprehensions to the metacircular pico evaluator.
 
 #Links
 
